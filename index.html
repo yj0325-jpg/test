@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>병아리 픽셀 회오리</title>
+<style>
+:root{--bg:#0b111a;--fg:#e9ecdf;--ac:#8fb4e3;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b111a;--fg:#e9ecdf;--ac:#8fb4e3}}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--fg);font-family:"Noto Sans KR",system-ui,sans-serif;overflow:hidden;touch-action:none}
+canvas{display:block;width:100%;height:100%}
+#ui{position:fixed;left:0;right:0;bottom:calc(20px + env(safe-area-inset-bottom,0px));display:flex;justify-content:center;gap:10px}
+button{font:inherit;color:var(--bg);background:var(--ac);border:0;border-radius:999px;padding:10px 20px;cursor:pointer}
+button.g{background:transparent;color:var(--fg);outline:1px solid #ffffff44}
+#again{transition:background .2s,color .2s}
+#again:hover{background:#fff;color:#0b111a}
+button:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+#hint{position:fixed;top:calc(16px + env(safe-area-inset-top,0px));left:0;right:0;text-align:center;font-size:13px;opacity:.55}
+</style></head><body>
+<canvas id="c"></canvas>
+<div id="hint">드래그하면 돌려볼 수 있어요</div>
+<div id="ui"><button id="again">흩뿌리기</button><button id="auto" class="g"></button></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="data.js"></script>
+<script src="scene.js"></script>
+<script>
+// index.html: page markup, styles and UI wiring only
+const sc=createChickScene(document.getElementById('c'));
+const ab=document.getElementById('auto');
+const label=()=>ab.textContent=sc.isAuto()?'자동 반복 켜짐':'자동 반복 꺼짐';
+label();
+document.getElementById('again').onclick=()=>sc.replay();
+ab.onclick=()=>{sc.toggleAuto();label()};
+</script></body></html>
